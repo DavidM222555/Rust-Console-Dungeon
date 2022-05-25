@@ -6,16 +6,17 @@ pub mod entity;
 pub mod item;
 
 fn main() {
-    let mut game = game_logic::Game::new(10, 10);
 
-    game.update_vector_at_pos(5, 5, 'b');
+    let mut game = game_logic::Game::create_board_from_file("src/Boards/Board1.txt".to_string());
 
+    game.update_player_pos(2, 2);
 
     loop {
-        item::get_weapon_from_string("abc 123".to_string());
-        game.update_at_rand_pos(' ');
-        game.move_player('d');
         game.print_board();
+
+        let user_input = game_logic::get_user_input();
+        game.move_player(user_input);
+
         sleep(Duration::new(1,0));
         clearscreen::clear().expect("Failed to clear screen");
     }
